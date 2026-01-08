@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eladmin-web
+  namespace: yu
+  annotations:
+    # 可选：如果前端是纯静态页面，可加以下注解优化
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx   # 必须与你的 Ingress Controller 的 class 匹配
+  rules:
+    - host: eladmin-web.yuchao.com   # 你的前端域名
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: eladmin-web   # 必须与你的 Service 名一致
+                port:
+                  number: 80        # Service 的 port
+
